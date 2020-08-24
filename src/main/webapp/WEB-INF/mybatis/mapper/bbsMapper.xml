@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs">
+
+	<sql id="whereList">
+		<if test="search=='all'">
+			INSTR(subject,#{searchKey}) &gt; 0 OR INSTR(content,#{searchKey}) &gt; 0
+		</if>
+		<if test="search=='content'">
+			INSTR(content,#{searchKey}) &gt; 0
+		</if>
+		<if test="search=='subject'">
+			INSTR(subject,#{searchKey}) &gt; 0
+		</if>
+	</sql>
+	
+	<select id="selectList" parameterType="map" resultType="com.pj.bbs.Board">
+		SELECT num, subject, created, hitCount, userId
+		FROM bbs
+		<where>
+			<include refid="whereList"/>
+		</where>
+		LIMIT #{offset},#{rows}
+	</select>
+	
+	<select id="selectBoard" parameterType="Integer" resultType="com.pj.bbs.Board">
+		SELECT num, subject, content, created, hitCount, userId
+		FROM bbs
+		WHERE num = #{num}
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.pj.bbs.Board">
+		INSERT INTO bbs(content,subject,created,userId,hitCount) VLAUE(#{content},#{subject},#{created},#{userId},0)
+	</insert>
+	
+	<update id="updateBoard" parameterType="com.pj.bbs.Board">
+		UPDATE bbs SET subject = #{subject}, content = #{content} WHERE num = #{num}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="com.pj.bbs.Board">
+		DELETE FROM bbs WHERE num = #{num}
+	</delete>
+</mapper>
