@@ -16,8 +16,13 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<Board> listBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Board> list = null;
+		try {
+			list = dao.selectList("selectList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
@@ -28,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return num;
 	}
 
 	@Override
@@ -50,7 +55,6 @@ public class BoardServiceImpl implements BoardService {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 	@Override

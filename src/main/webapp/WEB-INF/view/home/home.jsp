@@ -48,7 +48,7 @@ body{
 		<div id="login_box" style="width: 600px; height: 150px; margin:50px auto; border: 1px solid black; text-align: center;">
 			<p>아이디 : <input type="text" id="userId" name="userId"></p>
 			<p>비밀번호 : <input type="password" id="userPwd" name="userPwd"></p>
-			<button name="login_submit" type="button" onclick="login();">제출</button>
+			<button name="login_submit" type="button" onclick="login();">로그인</button>
 		</div>
 	</form>
 </body>

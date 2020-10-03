@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj.util.Util;
-
-import javassist.compiler.ast.Keyword;
 
 @Controller("bbs.bbsController")
 @RequestMapping("/bbs/*")
@@ -33,10 +32,16 @@ public class BoardController {
 			@RequestParam(defaultValue="all") String search,
 			@RequestParam(defaultValue="") String searchKey,
 			Model model,
-			HttpServletRequest req
+			HttpServletRequest req,
+			HttpSession session
 			) throws Exception {
 		
 		String cp = req.getContextPath();
+		
+		if(session.equals(null)) {
+			model.addAttribute("message","로그인 후 시도해주세요.");
+			return "home/home";
+		}
 		
 		int rows = 10;
 		int total_page = 0;
@@ -70,7 +75,6 @@ public class BoardController {
 		
 		map.put("offset", offset);
 		map.put("rows", rows);
-		
 		List<Board> list = null;
 		try {
 			list = service.listBoard(map);
@@ -112,7 +116,7 @@ public class BoardController {
 		
 		model.addAttribute("search",search);
 		model.addAttribute("searchKey",searchKey);
-		return "list";
+		return "bbs/list";
 	}
 	
 	
@@ -147,10 +151,11 @@ public class BoardController {
 	
 	@RequestMapping(value="insert",method=RequestMethod.GET)
 	public String insertbbs(
-			Model model
+			Model model,
+			HttpSession session
 			) {
 		model.addAttribute("state","insert");
-		return "insert";
+		return "bbs/created";
 	}
 	
 	@RequestMapping(value="insert", method=RequestMethod.POST)
@@ -179,7 +184,7 @@ public class BoardController {
 			throw e;
 		}
 		model.addAttribute("state","update");
-		return "insert";
+		return "/bbs/created";
 	}
 	
 	@RequestMapping(value="update",method=RequestMethod.POST)

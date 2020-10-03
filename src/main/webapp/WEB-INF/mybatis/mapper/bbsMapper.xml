@@ -30,6 +30,15 @@
 		WHERE num = #{num}
 	</select>
 	
+	<select id="selectDataCount" parameterType="map" resultType="Integer">
+		SELECT IFNULL(COUNT(*),0) FROM bbs 
+		<where>
+			<if test="searchKey!=null and searchKey!='' ">
+				<include refid="whereList"/>
+			</if>
+		</where>    	
+	</select>
+	
 	<insert id="insertBoard" parameterType="com.pj.bbs.Board">
 		INSERT INTO bbs(content,subject,created,userId,hitCount) VLAUE(#{content},#{subject},#{created},#{userId},0)
 	</insert>

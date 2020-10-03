@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-<select id="loginMember" parameterType="String" resultType="com.pj.member.Member">
-	SELECT  
-</select>
+	<select id="loginMember" parameterType="String" resultType="com.pj.member.Member">
+		SELECT userId, userPwd FROM member2 WHERE userId = #{userId}
+	</select>
 </mapper>

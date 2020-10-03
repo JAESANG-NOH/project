@@ -20,7 +20,7 @@ private CommonDAO dao;
 	public Member login(String userId) {
 		Member dto = null;
 		try {
-			dto = dao.selectOne("",userId);
+			dto = dao.selectOne("loginMember",userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
