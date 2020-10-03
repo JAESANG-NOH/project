@@ -67,8 +67,10 @@ a:active, a:hover {
 <script type="text/javascript">
 function deleteBoard(num) {
 	if(confirm("위 자료를 삭제 하시겠습니까 ?")) {
-		var url="<%=cp%>/bbs/delete?num="+num+"&${query}";
-		location.href=url;
+		var f = document.deleteForm;
+		f.action="<%=cp%>/bbs/delete";
+        f.method="post";
+        f.submit();
 	}
 }
 </script>
@@ -94,7 +96,7 @@ function deleteBoard(num) {
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td width="50%" align="left" style="padding-left: 5px;">
-       이름 : ${dto.name}
+       이름 : ${dto.userId}
     </td>
     <td width="50%" align="right" style="padding-right: 5px;">
         ${dto.created} | 조회 ${dto.hitCount}
@@ -124,19 +126,15 @@ function deleteBoard(num) {
         </c:if>
     </td>
 </tr>
-
-<tr height="30">
-   <td colspan="2" align="right">
-       From : ${dto.ipAddr}
-   </td>
-</tr>
 </table>
 
 <table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 <tr height="45">
     <td width="300" align="left">
         <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/update?num=${dto.num}&page=${page}';">수정</button>
-        <button type="button" class="btn" onclick="deleteBoard('${dto.num}');">삭제</button>
+        <form name="deleteForm">
+        	<button type="button" class="btn" onclick="deleteBoard('${dto.num}');">삭제</button>
+    	</form>
     </td>
 
     <td align="right">

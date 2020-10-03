@@ -11,4 +11,6 @@ public interface BoardService {
 	public void insertBoard(Board dto) throws Exception;
 	public void updateBoard(Board dto) throws Exception;
 	public void deleteBoard(Map<String, Object> map) throws Exception;
+	public Board preReadBoard(Map<String, Object>map);
+	public Board nextReadBoard(Map<String, Object>map);
 }

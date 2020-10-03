@@ -29,7 +29,8 @@ public class BoardServiceImpl implements BoardService {
 	public int dataCount(Map<String, Object> map) {
 		int num=0;;
 		try {
-			num = dao.selectOne("", map);
+			num = dao.selectOne("selectDataCount", map);
+			System.out.println(num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,12 +40,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void updateHitCount(int num) throws Exception {
 		try {
-			
+			dao.updateData("updateHitCount", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void updateBoard(Board dto) throws Exception {
 		try {
-			dao.updateData("", dto);
+			dao.updateData("updateBoard", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -71,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteBoard(Map<String, Object> map) throws Exception {
 		try {
-			dao.deleteData("", map);
+			dao.deleteData("deleteBoard", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -82,7 +82,7 @@ public class BoardServiceImpl implements BoardService {
 	public Board readBoard(int num) throws Exception {
 		Board dto = null;
 		try {
-			dto = dao.selectOne("",num);
+			dto = dao.selectOne("selectReadBoard",num);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -90,4 +90,28 @@ public class BoardServiceImpl implements BoardService {
 		return dto;
 	}
 
+	@Override
+	public Board preReadBoard(Map<String, Object> map) {
+		Board dto = null; 
+		try {
+			dto = dao.selectOne("selectPreReadBoard",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public Board nextReadBoard(Map<String, Object> map) {
+		Board dto = null;
+		try {
+			dto = dao.selectOne("selectNextReadBoard", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+		
+	}
+
+	
 }

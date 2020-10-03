@@ -39,15 +39,50 @@
 		</where>    	
 	</select>
 	
+	<select id="selectReadBoard" parameterType="Integer" resultType="com.pj.bbs.Board">
+		SELECT num, subject, content, created, hitCount, userId FROM bbs WHERE num = #{num}
+	</select>
+	
+	<select id="selectPreReadBoard" parameterType="Map" resultType="com.pj.bbs.Board">
+		SELECT num, subject 
+		FROM bbs
+		<where>
+			<if test="searchKey!=null and searchKey!='' ">
+				<include refid="whereList"/>
+			</if>
+			AND (num &gt; #{num})
+		</where>
+		ORDER BY num ASC
+		LIMIT 1
+	</select>
+	
+	<select id="selectNextReadBoard" parameterType="Map" resultType="com.pj.bbs.Board">
+		SELECT num, subject 
+		FROM bbs
+		<where>
+			<if test="searchKey!=null and searchKey!='' ">
+				<include refid="whereList"/>
+			</if>
+			AND (num &lt; #{num})
+		</where>
+		ORDER BY num ASC
+		LIMIT 1
+	</select>
+	
 	<insert id="insertBoard" parameterType="com.pj.bbs.Board">
-		INSERT INTO bbs(content,subject,created,userId,hitCount) VLAUE(#{content},#{subject},#{created},#{userId},0)
+		INSERT INTO bbs(content,subject,created,userId,hitCount) VALUES(#{content},#{subject},NOW(),#{userId},0)
 	</insert>
 	
 	<update id="updateBoard" parameterType="com.pj.bbs.Board">
 		UPDATE bbs SET subject = #{subject}, content = #{content} WHERE num = #{num}
 	</update>
 	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE bbs SET hitCount = hitCount + 1 WHERE num = #{num}
+	</update>
+	
 	<delete id="deleteBoard" parameterType="com.pj.bbs.Board">
-		DELETE FROM bbs WHERE num = #{num}
+		DELETE FROM bbs WHERE num = #{num} AND userId = #{userId}
 	</delete>
+	
 </mapper>

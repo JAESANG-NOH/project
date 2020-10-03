@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysql.cj.Session;
+import com.pj.member.SessionInfo;
 import com.pj.util.Util;
 
 @Controller("bbs.bbsController")
@@ -76,13 +78,14 @@ public class BoardController {
 		map.put("offset", offset);
 		map.put("rows", rows);
 		List<Board> list = null;
+		int listNum;
 		try {
 			list = service.listBoard(map);
-			int listNum = 0;
 			int n = 0;
+			listNum = 0;
 			for(Board dto : list) {
 				listNum = dataCount - (offset + n);
-				dto.setListnum(listNum);
+				dto.setListNum(listNum);
 				n++;
 			}
 		} catch (Exception e) {
@@ -135,24 +138,37 @@ public class BoardController {
 			query+="&search="+search+"&searchKey="+URLDecoder.decode(searchKey,"UTF-8");
 		}
 		
-		service.updateHitCount(num);
+		Board dto = null;
+		Board preReadBoard = null;
+		Board nextReadBoard = null;
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("search", search);
+		map.put("searchKey", searchKey);
 		
-		Board dto = service.readBoard(num);
-		if(dto==null) {
-			return "redirect:/bbs/list?"+query;
+		try {
+			service.updateHitCount(num);
+			dto = service.readBoard(num);	
+			preReadBoard = service.preReadBoard(map);
+			nextReadBoard = service.nextReadBoard(map);
+			if(dto==null) {
+				return "redirect:/bbs/list?"+query;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		model.addAttribute("preReadBoard",preReadBoard);
+		model.addAttribute("nextReadBoard", nextReadBoard);
 		model.addAttribute("dto",dto);
 		model.addAttribute("page",page);
 		model.addAttribute("query",query);
-		return "article";
+		return "bbs/article";
 	}
 	
 	@RequestMapping(value="insert",method=RequestMethod.GET)
 	public String insertbbs(
-			Model model,
-			HttpSession session
+			Model model
 			) {
 		model.addAttribute("state","insert");
 		return "bbs/created";
@@ -161,9 +177,13 @@ public class BoardController {
 	@RequestMapping(value="insert", method=RequestMethod.POST)
 	public String insertSubmitbbs(
 			Board dto,
+			HttpSession session,
 			HttpServletRequest req
 			) throws Exception {
 		try {
+			SessionInfo info = (SessionInfo) session.getAttribute("member");
+			dto.setUserId(info.getUserId());
+			System.out.println(dto.getSubject());
 			service.insertBoard(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,7 +192,7 @@ public class BoardController {
 		return "redirect:/bbs/list";
 	}
 	
-	@RequestMapping(value="update", method =RequestMethod.GET)
+	@RequestMapping(value="update", method=RequestMethod.GET)
 	public String updatebbs(
 			Model model,
 			@RequestParam int num
@@ -197,6 +217,24 @@ public class BoardController {
 			e.printStackTrace();
 			throw e;
 		}
+		return "redirect:/bbs/list";
+	}
+	
+	@RequestMapping(value="delete", method=RequestMethod.POST)
+	public String deletebbs(
+			@RequestParam int num,
+			HttpSession session
+			) throws Exception {
+			Map<String, Object> map = new HashMap<>();
+			try {
+				SessionInfo info = (SessionInfo)session.getAttribute("member");
+				map.put("userId", info.getUserId());
+				map.put("num", num);
+				service.deleteBoard(map);
+;			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
 		return "redirect:/bbs/list";
 	}
 }

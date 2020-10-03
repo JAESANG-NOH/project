@@ -98,7 +98,7 @@ a:active, a:hover {
             return;
         }
 
-        f.action = "<%=cp%>/bbs/${mode}";
+        f.action = "<%=cp%>/bbs/${state}";
 
         f.submit();
   }
@@ -146,10 +146,10 @@ a:active, a:hover {
   <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
      <tr height="45"> 
       <td align="center" >
-        <button type="button" class="btn" onclick="sendBoard();">${mode=='update'?'수정완료':'등록하기'}</button>
+        <button type="button" class="btn" onclick="sendBoard();">${state=='update'?'수정완료':'등록하기'}</button>
         <button type="reset" class="btn">다시입력</button>
-        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/list';">${mode=='update'?'수정취소':'등록취소'}</button>
-         <c:if test="${mode=='update'}">
+        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/list';">${state=='update'?'수정취소':'등록취소'}</button>
+         <c:if test="${state=='update'}">
          	 <input type="hidden" name="num" value="${dto.num}">
         	 <input type="hidden" name="page" value="${page}">
         </c:if>

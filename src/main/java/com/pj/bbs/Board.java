@@ -5,8 +5,16 @@ public class Board {
 	private String content;
 	private String created;
 	private int num;
-	private int listnum;
+	private int listNum;
 	private int hitCount;
+	private String userId;
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getSubject() {
 		return subject;
 	}
@@ -31,11 +39,11 @@ public class Board {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public int getListnum() {
-		return listnum;
+	public int getListNum() {
+		return listNum;
 	}
-	public void setListnum(int listnum) {
-		this.listnum = listnum;
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 	public int getHitCount() {
 		return hitCount;
