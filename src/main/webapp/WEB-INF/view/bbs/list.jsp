@@ -175,14 +175,12 @@ function searchList() {
       </td>
       <td align="center">
           <form name="searchForm" action="<%=cp%>/bbs/list" method="post">
-              <select name="condition" class="selectField">
-				  <option value="all"     ${condition=="all"?"selected='selected'":""}>모두</option>
-				  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-				  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-				  <option value="name"    ${condition=="name"?"selected='selected'":""}>작성자</option>
-				  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
+              <select name="search" class="selectField">
+				  <option value="all"     ${search=="all"?"selected='selected'":""}>모두</option>
+				  <option value="subject" ${search=="subject"?"selected='selected'":""}>제목</option>
+				  <option value="content" ${search=="content"?"selected='selected'":""}>내용</option>
 			</select>
-			<input type="text" name="keyword" value="${keyword}" class="boxTF">
+			<input type="text" name="searchKey" value="${searchKey}" class="boxTF">
             <button type="button" class="btn" onclick="searchList()">검색</button>
         </form>
       </td>

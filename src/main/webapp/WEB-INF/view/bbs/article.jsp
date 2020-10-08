@@ -68,7 +68,7 @@ a:active, a:hover {
 function deleteBoard(num) {
 	if(confirm("위 자료를 삭제 하시겠습니까 ?")) {
 		var f = document.deleteForm;
-		f.action="<%=cp%>/bbs/delete";
+		f.action="<%=cp%>/bbs/delete?num="+num;
         f.method="post";
         f.submit();
 	}
@@ -132,7 +132,7 @@ function deleteBoard(num) {
 <tr height="45">
     <td width="300" align="left">
         <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/update?num=${dto.num}&page=${page}';">수정</button>
-        <form name="deleteForm">
+        <form name="deleteForm" style="float: left;">
         	<button type="button" class="btn" onclick="deleteBoard('${dto.num}');">삭제</button>
     	</form>
     </td>

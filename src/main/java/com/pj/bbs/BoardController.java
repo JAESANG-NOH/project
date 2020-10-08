@@ -60,7 +60,7 @@ public class BoardController {
 		try {
 			dataCount = service.dataCount(map);
 			if(dataCount != 0) {
-				total_page = dataCount/rows +(dataCount % rows > 0 ? 0 : 1);
+				total_page = dataCount/rows +(dataCount % rows > 0 ? 1 :0);
 			}
 			if(total_page < page) {
 				page = total_page;
@@ -69,7 +69,6 @@ public class BoardController {
 			e.printStackTrace();
 			throw e;
 		}
-		
 		int offset = (page-1)*rows;
 		if(offset < 0){
 			offset = 0;
@@ -109,7 +108,7 @@ public class BoardController {
 		}
 		
 		String paging = util.paging(page, total_page, listUrl);
-		
+		System.out.println(paging);
 		model.addAttribute("list",list);
 		model.addAttribute("articleUrl",articleUrl); 
 		model.addAttribute("page",page);
@@ -183,7 +182,6 @@ public class BoardController {
 		try {
 			SessionInfo info = (SessionInfo) session.getAttribute("member");
 			dto.setUserId(info.getUserId());
-			System.out.println(dto.getSubject());
 			service.insertBoard(dto);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -10,7 +10,6 @@ public class Util {
 		int numPerBlock = 10;
 		int currentPageSetup;
 		int n, page;
-		
 		if(current_page < 1 || total_page < 1) {
 			sb.append("등록된 게시물이 없습니다.");
 			return sb.toString();
@@ -38,7 +37,7 @@ public class Util {
 			if(page==current_page) {
 				sb.append("<span class='curBox'>"+page+"</span>");
 			} else {
-				sb.append("<a href'"+list_url+"page="+page+" class='numBox''>"+page+"</a>");
+				sb.append("<a href='"+list_url+"page="+page+"'class=numBox'>"+page+"</a>");
 			}
 			page++;
 		}
