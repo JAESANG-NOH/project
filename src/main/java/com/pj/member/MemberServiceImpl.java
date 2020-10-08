@@ -27,4 +27,15 @@ private CommonDAO dao;
 		return dto;
 	}
 
+	@Override
+	public Member readMember(String userId) {
+		Member dto = null;
+		try {
+			dto = dao.selectOne("selectMember", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 }

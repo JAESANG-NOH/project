@@ -10,11 +10,40 @@
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
-
-<http auto-config="true" use-expressions="true">
-	<csrf disabled="true"/>
 	
-	<intercept-url pattern="/index.jsp" access="permitAll"/>
-	<intercept-url pattern="/home/**" access="permitAll"/>
-	<intercept-url pattern=""/>
-</http>		
+	<context:component-scan base-package="com.pj"/>
+	
+	<http auto-config="true" use-expressions="true">
+		<csrf disabled="true"/>
+		
+		<intercept-url pattern="/index.jsp" access="permitAll"/>
+		<intercept-url pattern="/home/**" access="permitAll"/>
+		
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+		
+		<form-login login-page="/member/login" 
+		login-processing-url="/member/login_check"
+		 username-parameter="userId" 
+		 password-parameter="userPwd" 
+		 authentication-failure-url="/member/login?login_error"
+		 default-target-url="/"
+		 always-use-default-target="false"
+		 authentication-success-handler-ref="authenticationSuccessHandler"/>
+					
+		<logout logout-url="/logout"
+				invalidate-session="true"
+				logout-success-url="/"/>
+		
+		<access-denied-handler error-page="/noAuthorizred/"/>
+		
+		<session-management>
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+		</session-management>
+	</http>
+	
+	<beans:bean id="authenticationSuccessHandler" class="com.pj.member.MyAuthenticationSuccessHandler"/>
+	<jdbc-user-service data-source-ref="dataSource"
+				       id="jdbcuserService"
+				       users-by-username-query="SELECT userId, userPwd FROM member WHERE userId=?"
+				       authorities-by-username-query="SELECT userId, authority FROM memberAuthority WHERE userId=?" />
+</beans:beans>
