@@ -28,6 +28,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 		session.setAttribute("member", info);
 		
 		super.onAuthenticationSuccess(request, response, authentication);
+		System.out.println("check2");
 	}
 	
 	

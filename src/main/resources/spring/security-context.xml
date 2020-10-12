@@ -21,7 +21,7 @@
 		
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
 		
-		<form-login login-page="/member/login" 
+		<form-login login-page="/home/home" 
 		login-processing-url="/member/login_check"
 		 username-parameter="userId" 
 		 password-parameter="userPwd" 
@@ -34,7 +34,7 @@
 				invalidate-session="true"
 				logout-success-url="/"/>
 		
-		<access-denied-handler error-page="/noAuthorizred/"/>
+		<access-denied-handler error-page="/noAuthorizred"/>
 		
 		<session-management>
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />

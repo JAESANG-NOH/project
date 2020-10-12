@@ -37,7 +37,7 @@ public class BoardController {
 			HttpServletRequest req,
 			HttpSession session
 			) throws Exception {
-		
+		System.out.println("check3");
 		String cp = req.getContextPath();
 		
 		if(session.equals(null)) {

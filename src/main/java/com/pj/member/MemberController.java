@@ -18,7 +18,8 @@ public class MemberController {
 			String msg = "아이디 혹은 비밀번호 오류";
 			model.addAttribute("message",msg);
 		}
-		return "/bbs/list";
+		System.out.println("check0");
+		return "/home/home";
 	}
 	
 	@RequestMapping(value="noAuthorized")
