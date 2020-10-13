@@ -65,7 +65,7 @@
 			</if>
 			AND (num &lt; #{num})
 		</where>
-		ORDER BY num ASC
+		ORDER BY num DESC
 		LIMIT 1
 	</select>
 	

@@ -111,18 +111,18 @@ function deleteBoard(num) {
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td colspan="2" align="left" style="padding-left: 5px;">
-       이전글 :
-         <c:if test="${not empty preReadDto}">
-              <a href="<%=cp%>/bbs/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
+    다음글 :
+         <c:if test="${not empty nextReadBoard}">
+              <a href="<%=cp%>/bbs/page?${query}&num=${nextReadBoard.num}">${nextReadBoard.subject}</a>
         </c:if>
     </td>
 </tr>
 
 <tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td colspan="2" align="left" style="padding-left: 5px;">
-    다음글 :
-         <c:if test="${not empty nextReadDto}">
-              <a href="<%=cp%>/bbs/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
+       이전글 :
+         <c:if test="${not empty preReadBoard}">
+              <a href="<%=cp%>/bbs/page?${query}&num=${preReadBoard.num}">${preReadBoard.subject}</a>
         </c:if>
     </td>
 </tr>

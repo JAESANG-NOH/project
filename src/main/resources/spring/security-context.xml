@@ -18,11 +18,10 @@
 		
 		<intercept-url pattern="/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/home/**" access="permitAll"/>
+		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN, ROLE_USER')"/>
 		
-		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-		
-		<form-login login-page="/home/home" 
-		login-processing-url="/member/login_check"
+		<form-login login-page="/member/login" 
+		 login-processing-url="/member/login_check"
 		 username-parameter="userId" 
 		 password-parameter="userPwd" 
 		 authentication-failure-url="/member/login?login_error"
@@ -32,9 +31,9 @@
 					
 		<logout logout-url="/logout"
 				invalidate-session="true"
-				logout-success-url="/"/>
+				logout-success-url="/home/home"/>
 		
-		<access-denied-handler error-page="/noAuthorizred"/>
+		<access-denied-handler error-page="/member/noAuthorized"/>
 		
 		<session-management>
 			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
@@ -44,6 +43,6 @@
 	<beans:bean id="authenticationSuccessHandler" class="com.pj.member.MyAuthenticationSuccessHandler"/>
 	<jdbc-user-service data-source-ref="dataSource"
 				       id="jdbcuserService"
-				       users-by-username-query="SELECT userId, userPwd FROM member WHERE userId=?"
+				       users-by-username-query="SELECT userId, userPwd, enabled FROM member2 WHERE userId=?"
 				       authorities-by-username-query="SELECT userId, authority FROM memberAuthority WHERE userId=?" />
 </beans:beans>

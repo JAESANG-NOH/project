@@ -13,12 +13,13 @@ public class MemberController {
 			String login_error,
 			Model model
 			) {
+		System.out.println(login_error+":"+model);
 		boolean bLoginError = login_error != null;
 		if(bLoginError) {
 			String msg = "아이디 혹은 비밀번호 오류";
 			model.addAttribute("message",msg);
 		}
-		System.out.println("check0");
+		System.out.println("check_memcon");
 		return "/home/home";
 	}
 	

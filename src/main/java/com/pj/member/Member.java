@@ -5,7 +5,21 @@ public class Member {
 	private String userId;
 	private String userPwd;
 	private String userName;
+	private String authority;
+	private int enabled;
 	
+	public int getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 	public String getMemberidx() {
 		return memberidx;
 	}

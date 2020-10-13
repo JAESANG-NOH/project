@@ -18,18 +18,18 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
-		
-		String userId = authentication.getName();
-		Member dto = service.readMember(userId);
-		SessionInfo info = new SessionInfo();
-		info.setUserId(dto.getUserId());
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("member", info);
-		
-		super.onAuthenticationSuccess(request, response, authentication);
-		System.out.println("check2");
+		try {
+			String userId = authentication.getName();
+			Member dto = service.readMember(userId);
+			SessionInfo info = new SessionInfo();
+			info.setUserId(dto.getUserId());
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("member", info);
+			
+			super.onAuthenticationSuccess(request, response, authentication);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
 }

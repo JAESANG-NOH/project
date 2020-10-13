@@ -43,4 +43,18 @@
          <property name="defaultEncoding" value="utf-8"/>
          <property name="maxUploadSize" value="10485760" />
     </bean>
+    
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    	<property name="order" value="1"/>
+    	<property name="exceptionMappings">
+    		<props>
+    			<prop key="java.lang.Exception">/error/error</prop>
+    		</props>
+    	</property>
+    	
+    	<property name="defaultErrorView" value="/error/error"/>
+    	
+    	<property name="warnLogCategory" value="ERROR"></property>
+    </bean>
+    
 </beans>

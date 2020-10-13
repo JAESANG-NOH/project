@@ -37,7 +37,7 @@ public class BoardController {
 			HttpServletRequest req,
 			HttpSession session
 			) throws Exception {
-		System.out.println("check3");
+		System.out.println("check_bbslist");
 		String cp = req.getContextPath();
 		
 		if(session.equals(null)) {
@@ -143,6 +143,7 @@ public class BoardController {
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("search", search);
 		map.put("searchKey", searchKey);
+		map.put("num", num);
 		
 		try {
 			service.updateHitCount(num);

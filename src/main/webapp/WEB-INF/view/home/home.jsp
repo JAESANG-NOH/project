@@ -37,7 +37,7 @@ body{
 		 return;
 	 }
 	 
-	 point.action = "<%=cp%>/member/login";
+	 point.action = "<%=cp%>/member/login_check";
 	 point.submit();
  }
 </script>
