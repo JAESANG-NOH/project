@@ -2,6 +2,7 @@ package com.pj.bbs;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mysql.cj.Session;
 import com.pj.member.SessionInfo;
 import com.pj.util.Util;
 
@@ -37,7 +37,6 @@ public class BoardController {
 			HttpServletRequest req,
 			HttpSession session
 			) throws Exception {
-		System.out.println("check_bbslist");
 		String cp = req.getContextPath();
 		
 		if(session.equals(null)) {
@@ -98,17 +97,14 @@ public class BoardController {
 		if(searchKey.length()!=0) {
 			query = "search="+search+"&searchKey="+URLEncoder.encode(searchKey, "UTF-8");
 		}
-		
 		listUrl = cp+"/bbs/list";
 		articleUrl = cp+"/bbs/page?page="+page;
-		
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
 		}
 		
 		String paging = util.paging(page, total_page, listUrl);
-		System.out.println(paging);
 		model.addAttribute("list",list);
 		model.addAttribute("articleUrl",articleUrl); 
 		model.addAttribute("page",page);

@@ -18,15 +18,16 @@
 		
 		<intercept-url pattern="/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/home/**" access="permitAll"/>
+		<intercept-url pattern="/error/**" access="permitAll"/>
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_ADMIN, ROLE_USER')"/>
 		
 		<form-login login-page="/member/login" 
 		 login-processing-url="/member/login_check"
 		 username-parameter="userId" 
 		 password-parameter="userPwd" 
-		 authentication-failure-url="/member/login?login_error"
 		 default-target-url="/"
 		 always-use-default-target="false"
+		 authentication-failure-url="/member/login?login_error"
 		 authentication-success-handler-ref="authenticationSuccessHandler"/>
 					
 		<logout logout-url="/logout"
@@ -43,6 +44,6 @@
 	<beans:bean id="authenticationSuccessHandler" class="com.pj.member.MyAuthenticationSuccessHandler"/>
 	<jdbc-user-service data-source-ref="dataSource"
 				       id="jdbcuserService"
-				       users-by-username-query="SELECT userId, userPwd, enabled FROM member2 WHERE userId=?"
-				       authorities-by-username-query="SELECT userId, authority FROM memberAuthority WHERE userId=?" />
+				       users-by-username-query="SELECT userId AS userName, userPwd AS password, enabled FROM member2 WHERE userId=?"
+				       authorities-by-username-query="SELECT userId AS username, authority AS authority FROM memberAuthority WHERE userId=?" />
 </beans:beans>

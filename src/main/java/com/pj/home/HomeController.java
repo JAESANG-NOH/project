@@ -17,10 +17,6 @@ public class HomeController {
 			HttpSession session,
 			Model model
 			) {
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		if(info!=null) {
-				return "redirect:/bbs/list";
-		}
 		return "/home/home";	
 	}
 }

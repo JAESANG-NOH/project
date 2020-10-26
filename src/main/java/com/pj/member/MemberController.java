@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("member.memberController")
 @RequestMapping("/member/*")
 public class MemberController { 
-	@RequestMapping(value="login", method=RequestMethod.POST)
+	@RequestMapping(value="login")
 	private String loginForm(
 			String login_error,
 			Model model

@@ -61,7 +61,6 @@
     <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
          <property name="transactionManager" ref="transactionManager" />
     </bean>
-    <!-- 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
     	<tx:attributes>
     		<tx:method name="insert*" rollback-for="Exception"/>
@@ -70,6 +69,7 @@
     	</tx:attributes>
     </tx:advice>
      
+    <!-- 
     <aop:config proxy-target-class="true">
     	<aop:pointcut id="serviceOperation" expression="execution(public * com.pj..*Service.*(..))"/>
     	<aop:advisor id="transactionAdvisor" pointcut-ref="serviceOperation" advice-ref="txAdvice"/>
